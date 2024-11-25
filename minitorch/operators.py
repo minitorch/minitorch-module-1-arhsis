@@ -38,66 +38,80 @@ def mul(x: float, y: float) -> float:
     """Multiply two numbers."""
     return x * y
 
+
 def id(x: float) -> float:
     """Identity function."""
     return x
+
 
 def add(x: float, y: float) -> float:
     """Add two numbers."""
     return x + y
 
+
 def neg(x: float) -> float:
     """Negate a number."""
     return -x
 
-def lt(x:float, y:float) -> float:
+
+def lt(x: float, y: float) -> float:
     """If x less than y return 1.0 else 0.0"""
     return 1.0 if x < y else 0.0
 
-def is_close(x:float, y:float) -> float:
+
+def is_close(x: float, y: float) -> float:
     """If |x - y| < 1e-2 return 1.0 else 0.0"""
     return 1.0 if abs(x - y) < 1e-2 else 0.0
 
-def eq(x:float, y:float) -> float:
+
+def eq(x: float, y: float) -> float:
     """If x equal y return 1.0 else 0.0"""
     return 1.0 if is_close(x, y) else 0.0
 
-def max(x:float, y:float) -> float:
+
+def max(x: float, y: float) -> float:
     """Return the maximum of two numbers."""
     return x if x > y else y
 
-def sigmoid(x:float) -> float:
+
+def sigmoid(x: float) -> float:
     """Return the sigmoid of x."""
     return 1.0 / (1.0 + math.exp(-x)) if x >= 0 else math.exp(x) / (1.0 + math.exp(x))
 
-def relu(x:float) -> float:
+
+def relu(x: float) -> float:
     """Return the relu of x."""
     return x if x > 0 else 0.0
 
-def log(x:float) -> float:
+
+def log(x: float) -> float:
     """Return the log of x."""
     return math.log(x)
 
-def exp(x:float) -> float:
+
+def exp(x: float) -> float:
     """Return the exponential of x."""
     return math.exp(x)
 
-def log_back(x:float, y:float) -> float:
+
+def log_back(x: float, y: float) -> float:
     """Return the log back of x."""
     return y / x
 
-def inv(x:float) -> float:
+
+def inv(x: float) -> float:
     """Return the inverse of x."""
     return 1.0 / x
 
-def inv_back(x:float, y:float) -> float:
+
+def inv_back(x: float, y: float) -> float:
     """Return the inverse back of x."""
     return -1.0 / (x * x) * y
 
-def relu_back(x:float, y:float) -> float:
+
+def relu_back(x: float, y: float) -> float:
     """Return the relu back of x."""
     return y if x > 0 else 0.0
-
 
 
 # ## Task 0.3
@@ -118,34 +132,47 @@ def relu_back(x:float, y:float) -> float:
 
 # TODO: Implement for Task 0.3.
 
+
 def map(fn: Callable[[float], float]) -> Callable[[Iterable[float]], Iterable[float]]:
     """Return a function that applies fn to each element of a list"""
     return lambda xs: [fn(x) for x in xs]
 
-def zipWith(fn: Callable[[float, float], float]) -> Callable[[Iterable[float], Iterable[float]], Iterable[float]]:
+
+def zipWith(
+    fn: Callable[[float, float], float]
+) -> Callable[[Iterable[float], Iterable[float]], Iterable[float]]:
     """Return a function that applies fn to each pair of elements from two lists"""
     return lambda xs, ys: [fn(x, y) for x, y in zip(xs, ys)]
 
-def reduce(fn: Callable[[float, float], float], start: float) -> Callable[[Iterable[float]], float]:
+
+def reduce(
+    fn: Callable[[float, float], float], start: float
+) -> Callable[[Iterable[float]], float]:
     """Return a function that reduces a list with fn starting from start"""
+
     def reduce_fn(xs: Iterable[float]) -> float:
         acc = start
         for x in xs:
             acc = fn(acc, x)
         return acc
+
     return reduce_fn
+
 
 def negList(xs: Iterable[float]) -> Iterable[float]:
     """Negate a list."""
     return map(neg)(xs)
 
+
 def addLists(xs: Iterable[float], ys: Iterable[float]) -> Iterable[float]:
     """Add two lists element-wise."""
     return zipWith(add)(xs, ys)
 
+
 def sum(xs: Iterable[float]) -> float:
     """Sum a list."""
     return reduce(add, 0.0)(xs)
+
 
 def prod(xs: Iterable[float]) -> float:
     """Product of a list."""
